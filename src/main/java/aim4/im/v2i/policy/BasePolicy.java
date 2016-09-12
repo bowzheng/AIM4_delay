@@ -461,6 +461,7 @@ public final class BasePolicy implements Policy, ExtendedBasePolicyCallback {
     Confirm confirmMsg =
       new Confirm(im.getId(),
                   vin,
+				  im.getCurrentTime(),
                   reservationId,
                   latestRequestId,
                   reserveParam.getSuccessfulProposal().getArrivalTime(),
@@ -495,6 +496,7 @@ public final class BasePolicy implements Policy, ExtendedBasePolicyCallback {
   public void sendRejectMsg(int vin, int latestRequestId, Reject.Reason reason){
     im.sendI2VMessage(new Reject(im.getId(),
                                  vin,
+								 im.getCurrentTime(),
                                  latestRequestId,
                                  im.getCurrentTime(), // can re-send request
                                                       // immediately

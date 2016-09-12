@@ -93,6 +93,9 @@ public abstract class V2IMessage {
 
   /** The type of this message. */
   protected Type messageType;
+  
+  
+  private double scheduledTime; //Bowen add 20160912. The time scheduled to send the message. 
 
   /**
    * The size, in bits, of this message.
@@ -111,9 +114,10 @@ public abstract class V2IMessage {
    * @param imID the ID number of the IntersectionManager to which
    *                      this message is being sent
    */
-  public V2IMessage(int vin, int imID) {
+  public V2IMessage(int vin, int imID, double scheduledTime) {
     this.vin = vin;
     this.imId = imID;
+    this.scheduledTime = scheduledTime;
   }
 
   public V2IMessage(V2IMessage msg) {
@@ -121,6 +125,7 @@ public abstract class V2IMessage {
     this.imId = msg.imId;
     this.messageType = msg.messageType;
     this.size = msg.size;
+	this.scheduledTime = msg.scheduledTime;
   }
 
   /////////////////////////////////
@@ -154,6 +159,11 @@ public abstract class V2IMessage {
    */
   public Type getMessageType() {
     return messageType;
+  }
+  
+  //Bowen add 20160912
+  public double getScheduledTime(){
+	  return scheduledTime;
   }
 
   /**

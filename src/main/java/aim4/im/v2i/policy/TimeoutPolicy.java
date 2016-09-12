@@ -170,6 +170,7 @@ public class TimeoutPolicy implements Policy, V2IManagerCallback {
       timeouts.put(msg.getVin(), nextComm);
       im.sendI2VMessage(new Reject(rejectMsg.getImId(),
                                    rejectMsg.getVin(),
+								   rejectMsg.getScheduledTime(),
                                    rejectMsg.getRequestId(),
                                    nextComm, // the new nextAllowedComm
                                    rejectMsg.getReason()));
@@ -268,6 +269,7 @@ public class TimeoutPolicy implements Policy, V2IManagerCallback {
         timeouts.put(msg.getVin(), nextComm);
         sendI2VMessage(new Reject(im.getId(),
                                   msg.getVin(),
+								  msg.getScheduledTime(),
                                   ((Request)msg).getRequestId(),
                                   nextComm,
                                   Reject.Reason.BEFORE_NEXT_ALLOWED_COMM));

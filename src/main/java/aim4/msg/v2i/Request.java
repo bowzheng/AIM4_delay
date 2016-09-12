@@ -410,10 +410,10 @@ public class Request extends V2IMessage {
    * @param spec           the specification of the vehicle
    * @param proposals      the proposals
    */
-  public Request(int sourceID, int destinationID, int requestId,
+  public Request(int sourceID, int destinationID, double scheduledTime, int requestId,
                  VehicleSpecForRequestMsg spec,
                  List<Proposal> proposals) {
-    super(sourceID, destinationID);
+    super(sourceID, destinationID, scheduledTime);
     this.requestId = requestId;
     this.spec = spec;
     this.proposals = proposals;
@@ -440,7 +440,7 @@ public class Request extends V2IMessage {
    *          the request
    */
   public Request(Request r) {
-    super(r.getVin(), r.getImId());
+    super(r.getVin(), r.getImId(), r.getScheduledTime());
 
     this.requestId = r.requestId;
     this.spec = new VehicleSpecForRequestMsg(r.spec);

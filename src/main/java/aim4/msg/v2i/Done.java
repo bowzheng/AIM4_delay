@@ -61,9 +61,9 @@ public class Done extends V2IMessage {
    * @param destinationID         the ID number of the IntersectionManager to
    * @param reservationID         the ID number of the reservation
    */
-  public Done(int sourceID, int destinationID, int reservationID) {
+  public Done(int sourceID, int destinationID, double scheduledTime, int reservationID) {
     // Set source and destination
-    super(sourceID, destinationID);
+    super(sourceID, destinationID, scheduledTime);
     this.reservationID = reservationID;
     messageType = Type.DONE;
     size += Constants.INTEGER_SIZE;

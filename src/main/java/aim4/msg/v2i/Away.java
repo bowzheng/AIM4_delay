@@ -61,9 +61,9 @@ public class Away extends V2IMessage {
    *                              which this message is being sent
    * @param reservationID         the ID number of the reservation
    */
-  public Away(int sourceID, int destinationID, int reservationID) {
+  public Away(int sourceID, int destinationID, double scheduledTime, int reservationID) {
     // Set source and destination
-    super(sourceID, destinationID);
+    super(sourceID, destinationID, scheduledTime);
     this.reservationID = reservationID;
     messageType = Type.AWAY;
     size += Constants.INTEGER_SIZE;

@@ -69,6 +69,8 @@ public abstract class I2VMessage {
    * is being sent.
    */
   private int imId;
+  
+  private double scheduledTime; //Bowen add 20160912. The time scheduled to send the message. 
 
   /////////////////////////////////
   // PRIVATE FIELDS
@@ -96,9 +98,10 @@ public abstract class I2VMessage {
    * @param vin   the ID number of the Vehicle to which this message is being
    *              sent
    */
-  public I2VMessage(int imId, int vin) {
+  public I2VMessage(int imId, int vin, double scheduledTime) { //Bowen Modified 20160912
     this.imId = imId;
     this.vin = vin;
+	this.scheduledTime = scheduledTime;
   }
 
   /**
@@ -111,6 +114,7 @@ public abstract class I2VMessage {
     this.vin = msg.vin;
     this.messageType = msg.messageType;
     this.size = msg.size;
+	this.scheduledTime = msg.scheduledTime;
   }
 
   /////////////////////////////////
@@ -144,6 +148,11 @@ public abstract class I2VMessage {
    */
   public Type getMessageType() {
     return messageType;
+  }
+  
+  //Bowen add 20160912
+  public double getScheduledTime(){
+	  return scheduledTime;
   }
 
   /**

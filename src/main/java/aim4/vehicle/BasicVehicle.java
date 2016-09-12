@@ -1257,6 +1257,7 @@ public abstract class BasicVehicle implements VehicleSimView {
    */
   @Override
   public abstract Driver getDriver();
+  
 
   /////////////////////////////////
   // PUBLIC METHODS

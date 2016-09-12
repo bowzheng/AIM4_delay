@@ -141,14 +141,14 @@ public class Confirm extends I2VMessage {
    *                        pairs to be executed by the vehicle during
    *                        intersection traversal
    */
-  public Confirm(int imId, int vin,
+  public Confirm(int imId, int vin, double scheduledTime,
                  int reservationID, int requestId,
                  double arrivalTime,
                  double earlyError, double lateError,
                  double arrivalVelocity,
                  int arrivalLaneID, int departureLaneID,
                  double aczDistance, Queue<double[]> accProfile) {
-    super(imId, vin);
+    super(imId, vin, scheduledTime);
     this.reservationId = reservationID;
     this.requestId = requestId;
     this.arrivalTime = arrivalTime;

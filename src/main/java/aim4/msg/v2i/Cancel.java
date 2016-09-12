@@ -60,9 +60,9 @@ public class Cancel extends V2IMessage {
    *                              which this message is being sent
    * @param reservationID         the ID number of the reservation to cancel
    */
-  public Cancel(int sourceID, int destinationID, int reservationID) {
+  public Cancel(int sourceID, int destinationID, double scheduledTime, int reservationID) {
     // Set source and destination
-    super(sourceID, destinationID);
+    super(sourceID, destinationID, scheduledTime);
     this.reservationID = reservationID;
     messageType = Type.CANCEL;
     size += Constants.INTEGER_SIZE;

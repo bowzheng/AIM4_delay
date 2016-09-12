@@ -1915,6 +1915,7 @@ public class V2ICoordinator implements Coordinator {
     Request rqst =
       new Request(vehicle.getVIN(),  // sourceID
                   driver.getCurrentIM().getId(), // destinationID
+				  driver.getCurrentIM().getCurrentTime(),
                   nextRequestId,
                   new Request.VehicleSpecForRequestMsg(vehicle.getSpec()),
                   proposals);
@@ -1935,6 +1936,7 @@ public class V2ICoordinator implements Coordinator {
   private void sendCancelMessage(int reservationID) {
     vehicle.send(new Cancel(vehicle.getVIN(), // sourceID
                             driver.getCurrentIM().getId(), // destinationID
+							driver.getCurrentIM().getCurrentTime(),
                             reservationID)); // reservationID
   }
 
@@ -1949,6 +1951,7 @@ public class V2ICoordinator implements Coordinator {
   private void sendDoneMessage(int reservationID) {
     vehicle.send(new Done(vehicle.getVIN(), // sourceID
                           driver.getCurrentIM().getId(),  // destinationID
+						  driver.getCurrentIM().getCurrentTime(),
                           reservationID));  // reservationID
   }
 
@@ -1964,6 +1967,7 @@ public class V2ICoordinator implements Coordinator {
   private void sendAwayMessage(int reservationID) {
     vehicle.send(new Away(vehicle.getVIN(), // sourceID
                           driver.getCurrentIM().getId(),  // destinationID
+						  driver.getCurrentIM().getCurrentTime(),
                           reservationID));  // reservationID
   }
 

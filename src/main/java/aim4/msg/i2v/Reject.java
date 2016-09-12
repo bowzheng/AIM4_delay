@@ -129,12 +129,12 @@ public class Reject extends I2VMessage {
    * @param reason                   the reason this Reject message is being
    *                                 sent
    */
-  public Reject(int sourceID, int destinationID,
+  public Reject(int sourceID, int destinationID, double scheduledTime,
                 int requestId,
                 double nextAllowedCommunication,
                 Reason reason) {
     // Set the source and destination
-    super(sourceID, destinationID);
+    super(sourceID, destinationID, scheduledTime);
     this.requestId = requestId;
     this.nextAllowedCommunication = nextAllowedCommunication;
     this.reason = reason;
