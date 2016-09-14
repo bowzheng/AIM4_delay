@@ -1,7 +1,8 @@
 AIM4 is a traffic simulator for the study of innovative design of intersection control protocol.
 This program is based on the source code of AIM3, which is written by Kurt Dresner.
 AIM4 is currently maintained by Tsz-Chiu Au <chiu@cs.utexas.edu>.
-Modified by Bowen
+
+Modified by Bowen to add communication latency to the simulator.
 
 Install Apache Maven (version >= 2.2.1):
 
