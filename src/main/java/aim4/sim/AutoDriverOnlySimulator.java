@@ -174,7 +174,7 @@ public class AutoDriverOnlySimulator implements Simulator {
     if (Debug.PRINT_SIMULATOR_STAGE) {
       System.err.printf("------SIM:communication---------------\n");
     }
-    communication();
+    communication(timeStep);
     if (Debug.PRINT_SIMULATOR_STAGE) {
       System.err.printf("------SIM:moveVehicles---------------\n");
     }
@@ -737,16 +737,16 @@ public class AutoDriverOnlySimulator implements Simulator {
   /**
    * Deliver the V2I and I2V messages.
    */
-  private void communication() {
-    deliverV2IMessages();
-    deliverI2VMessages();
+  private void communication(double timeStep) {
+    deliverV2IMessages(timeStep);
+    deliverI2VMessages(timeStep);
 //    deliverV2VMessages();
   }
 
   /**
    * Deliver the V2I messages.
    */
-  private void deliverV2IMessages() {
+  private void deliverV2IMessages(double timeStep) {
     // Go through each vehicle and deliver each of its messages
     for(VehicleSimView vehicle : vinToVehicles.values()) {
       // Start with V2I messages
@@ -754,29 +754,40 @@ public class AutoDriverOnlySimulator implements Simulator {
         AutoVehicleSimView sender = (AutoVehicleSimView)vehicle;
         Queue<V2IMessage> v2iOutbox = sender.getV2IOutbox();
         while(!v2iOutbox.isEmpty()) {
-          V2IMessage msg = v2iOutbox.poll();
+          V2IMessage msg = v2iOutbox.peek();
+		  //System.out.println(msg.getScheduledTime());
           V2IManager receiver =
-            (V2IManager)basicMap.getImRegistry().get(msg.getImId());
-          // Calculate the distance the message must travel
-          double txDistance =
-            sender.getPosition().distance(
-                receiver.getIntersection().getCentroid());
-          // Find out if the message will make it that far
-          if(transmit(txDistance, sender.getTransmissionPower())) {
-            // Actually deliver the message
-            receiver.receive(msg);
-            // Add the delivery to the debugging information
-          }
+             (V2IManager)basicMap.getImRegistry().get(msg.getImId());
+              // Calculate the distance the message must travel
+              double txDistance =
+                sender.getPosition().distance(
+                    receiver.getIntersection().getCentroid());
+              // Find out if the message will make it that far
+              if(transmit(txDistance, sender.getTransmissionPower())) {
+				System.out.println("current time " + receiver.getCurrentTime() + " sender " + msg.getVin() + " scheduled time " + msg.getScheduledTime());
+				if (receiver.getCurrentTime() >= msg.getScheduledTime() + 2.0 * timeStep){
+	            // Actually deliver the message
+				    msg = v2iOutbox.poll();
+	                receiver.receive(msg);
+				    System.out.println("delivered V2I message: sender " + msg.getVin() + " " + msg.getMessageType());
+                // Add the delivery to the debugging information
+                }
+				else
+				{
+					break;
+				}
+		      }
           // Either way, we increment the number of transmitted messages
         }
       }
     }
   }
+  
 
   /**
    * Deliver the I2V messages.
    */
-  private void deliverI2VMessages() {
+  private void deliverI2VMessages(double timeStep) {
     // Now deliver all the I2V messages
     for(IntersectionManager im : basicMap.getIntersectionManagers()) {
       V2IManager senderIM = (V2IManager)im;
@@ -792,13 +803,17 @@ public class AutoDriverOnlySimulator implements Simulator {
             vehicle.getPosition());
         // Find out if the message will make it that far
         if(transmit(txDistance, senderIM.getTransmissionPower())) {
+		  if (senderIM.getCurrentTime() >= msg.getScheduledTime() + 0.0 * timeStep ){
           // Actually deliver the message
-          vehicle.receive(msg);
+              vehicle.receive(msg);
+			  System.out.println("delivered I2V message. receiver " + msg.getVin() + " " + msg.getMessageType());
+			  i2vIter.remove();
+		  }
         }
       }
       // Done delivering the IntersectionManager's messages, so clear the
       // outbox.
-      senderIM.clearOutbox();
+      //senderIM.clearOutbox();
     }
   }
 
