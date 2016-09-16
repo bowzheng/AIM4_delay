@@ -382,6 +382,7 @@ public class MaxAccelReservationCheck {
       // Then pDown = (t14, vDown)
 
       double t14 = (vEnd - accel * tTotal - v1) / (decel - accel);
+	  System.out.println("t14= " + t14 + " vEnd= " + vEnd + " v1= " + v1 + " accel= " + accel + " tTotal= " + tTotal + " decel= " + decel + " timeEnd= " + timeEnd + " time1= " + time1);
       double t15 = tTotal - t14;
       double vDown = v1 + decel * t14;
 

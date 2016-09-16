@@ -1138,6 +1138,7 @@ public class V2ICoordinator implements Coordinator {
 
     AccelSchedule as = null;
     try {
+	  System.out.println("check vehicle " + msg.getVin());
       as = MaxAccelReservationCheck.check(time1, v1,
                                           timeEnd, vEnd,
                                           dTotal,
@@ -1145,11 +1146,11 @@ public class V2ICoordinator implements Coordinator {
                                           accel,
                                           decel);
     } catch(ReservationCheckException e) {
-      if (isDebugging) {
-        System.err.printf("Cancel the reservation because vehicle " +
+      //if (isDebugging) {
+        System.err.printf("Cancel the reservation because vehicle " + msg.getVin() + " " + msg.getMessageType() + 
                           "can't accept the reservation.\n");
         System.err.printf("Reason: %s\n", e.getMessage());
-      }
+      //}
     }
     if (as != null) {
       // Great, it can accelerate to the intersection according to the
@@ -1390,6 +1391,7 @@ public class V2ICoordinator implements Coordinator {
       double time1 = vehicle.gaugeTime();
       double v1 = vehicle.gaugeVelocity();
       double dTotal = driver.distanceToNextIntersection();
+	  System.out.println("vehicle " + vehicle.getVIN() + " distance to intersection " + dTotal);
       // vTop is equal to max(road's speed limit, vehicle' max speed)
       double vTop = DriverUtil.calculateMaxFeasibleVelocity(vehicle);
       double vEndMax = Math.min(vTop, maxArrivalVelocity);
