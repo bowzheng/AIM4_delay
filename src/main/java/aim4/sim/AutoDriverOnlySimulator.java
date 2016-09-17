@@ -764,9 +764,9 @@ public class AutoDriverOnlySimulator implements Simulator {
                     receiver.getIntersection().getCentroid());
               // Find out if the message will make it that far
               if(transmit(txDistance, sender.getTransmissionPower())) {
-				System.out.println("current time " + receiver.getCurrentTime() + " sender " + msg.getVin() + " scheduled time " + msg.getScheduledTime());
-				if (receiver.getCurrentTime() >= msg.getScheduledTime() + 2.0 * timeStep){
+				if (receiver.getCurrentTime() >= msg.getScheduledTime() + 0.0 * timeStep){
 	            // Actually deliver the message
+				    System.out.println("current time " + receiver.getCurrentTime() + " sender " + msg.getVin() + " scheduled time " + msg.getScheduledTime());
 				    msg = v2iOutbox.poll();
 	                receiver.receive(msg);
 				    System.out.println("delivered V2I message: sender " + msg.getVin() + " " + msg.getMessageType());
@@ -803,8 +803,9 @@ public class AutoDriverOnlySimulator implements Simulator {
             vehicle.getPosition());
         // Find out if the message will make it that far
         if(transmit(txDistance, senderIM.getTransmissionPower())) {
-		  if (senderIM.getCurrentTime() >= msg.getScheduledTime() + 0.0 * timeStep ){
+		  if (senderIM.getCurrentTime() >= msg.getScheduledTime() + 1.0 * timeStep ){
           // Actually deliver the message
+		      System.out.println("current time " + senderIM.getCurrentTime() + " IM IV2 message scheduled time " + msg.getScheduledTime());
               vehicle.receive(msg);
 			  System.out.println("delivered I2V message. receiver " + msg.getVin() + " " + msg.getMessageType());
 			  i2vIter.remove();

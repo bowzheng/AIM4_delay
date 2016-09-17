@@ -1148,7 +1148,7 @@ public class V2ICoordinator implements Coordinator {
     } catch(ReservationCheckException e) {
       //if (isDebugging) {
         System.err.printf("Cancel the reservation because vehicle " + msg.getVin() + " " + msg.getMessageType() + 
-                          "can't accept the reservation.\n");
+                          " can't accept the reservation.\n");
         System.err.printf("Reason: %s\n", e.getMessage());
       //}
     }
